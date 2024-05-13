@@ -35,7 +35,19 @@ app.post('/users/create', async(req, res) => {
     });
   })
 
-  app.get('/users/:id', async(req, res) => {
+  app.get('/users/', async(req, res) => {
+    const id = parseInt(req.params.id);
+    const client = new MongoClient(uri);
+    await client.connect();
+    const users = await client.db('mydb').collection('users').find().toArray();
+    await client.close();
+    res.status(200).send({
+      "status": "ok",
+      "users": users
+    });
+  })
+
+app.get('/users/:id', async(req, res) => {
     const id = parseInt(req.params.id);
     const client = new MongoClient(uri);
     await client.connect();
