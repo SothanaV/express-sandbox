@@ -1,11 +1,13 @@
 services:
     mongo:
+        container_name: ${PROJECT_NAME}-mongo
         image: mongo:7.0.9-jammy
         env_file:
             - .env
 
 
     mongo-express:
+        container_name: ${PROJECT_NAME}-mongo-express
         image: mongo-express:1.0.2-20-alpine3.19
         ports:
             - 8081:8081
@@ -13,6 +15,7 @@ services:
             - .env
     
     backend:
+        container_name: ${PROJECT_NAME}-backend
         build: ./backend
         command: bash runserver.sh
         volumes:
